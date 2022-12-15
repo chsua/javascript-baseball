@@ -5,6 +5,7 @@ class BaseballGame {
     #correctBall 
 
     constructor(){
+        this.start() ;
         this.#correctBall = makeCorrectBall() ;
     }
 
@@ -25,7 +26,8 @@ class BaseballGame {
     userBallCallback(userBall){
         try {
             this.userBallValidate(userBall) ;
-            this.checkUserBallCorrectBall(userBall) ;
+            const resultMessage = this.printResult(this.checkUserBallCorrectBall(userBall)) ;
+            if (this.checkThreeStrike(resultMessage)) 
 
         } catch (error) {
             this.requestUserBall() ;
@@ -59,6 +61,29 @@ class BaseballGame {
         return `${ball}${MESSAGE.BALL[0]} ${strike}${MESSAGE.BALL[1]}`
     }
 
+    checkThreeStrike(resultMessage){
+        return (resultMessage === BASEBALL.END_CHECK)
+    }
+
+    isEnd(){
+        Console.print(MESSAGE.END)
+
+    }
+
+    requestRegame(){
+        Console.readLine(MESSAGE.REQUEST_REGAME_QUIT, answer => {
+
+        })
+    }
+
+    regameCallback(answer){
+
+    }
+
+    regameValidate(answer){
+        answer = +answer ;
+        if ( answer === REGAME_QUIT.QUIT || answer === REGAME_QUIT.REGAME ) throw new Error (MESSAGE.ERROR_BALL_RANGE) ;
+    }
 }
 
 

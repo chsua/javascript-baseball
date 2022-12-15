@@ -2,6 +2,7 @@
 const BASEBALL = {
     RANGE: 3,
     EXCEPT: 0,
+    END_CHECK: "3스트라이크"
 }
 
 const MESSAGE = {
