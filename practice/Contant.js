@@ -1,7 +1,7 @@
 
 const BASEBALL = {
     RANGE: 3,
-    EXCEPT: 0,
+    EXCEPT: "0",
     END_CHECK: "3스트라이크"
 }
 
@@ -17,8 +17,8 @@ const MESSAGE = {
 }
 
 const REGAME_QUIT = {
-    REGAME: 1,
-    QUIT: 2,
+    REGAME: "1",
+    QUIT: "2",
 }
 
 module.exports = {BASEBALL, MESSAGE, REGAME_QUIT} ;

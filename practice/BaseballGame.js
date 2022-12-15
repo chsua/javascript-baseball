@@ -5,12 +5,19 @@ class BaseballGame {
     #correctBall 
 
     constructor(){
+        this.#correctBall = this.makeCorrectBall() ;
         this.start() ;
-        this.#correctBall = makeCorrectBall() ;
+    }
+
+    regame(){
+        this.#correctBall = this.makeCorrectBall() ;
+        this.requestUserBall() ;
+
     }
 
     start(){
         Console.print(MESSAGE.START) ;
+        this.requestUserBall() ;
     }
 
     makeCorrectBall(){
@@ -19,17 +26,19 @@ class BaseballGame {
 
     requestUserBall(){
         Console.readLine(MESSAGE.REQUEST_BASEBALL, userBall => {
-
+            this.userBallCallback(userBall) ;
         })
     }
 
     userBallCallback(userBall){
         try {
-            this.userBallValidate(userBall) ;
+            this.userBallValidate(userBall.split("")) ;
             const resultMessage = this.printResult(this.checkUserBallCorrectBall(userBall)) ;
-            if (this.checkThreeStrike(resultMessage)) 
-
+            Console.print(resultMessage) ;
+            if (this.checkThreeStrike(resultMessage)) this.requestRegame() ;
+            else this.requestUserBall() ;
         } catch (error) {
+            Console.print(error) ;
             this.requestUserBall() ;
         }
     }
@@ -62,27 +71,36 @@ class BaseballGame {
     }
 
     checkThreeStrike(resultMessage){
-        return (resultMessage === BASEBALL.END_CHECK)
+        if (resultMessage === BASEBALL.END_CHECK){
+            this.isEnd();
+            return true ;
+        }
+        return false ;
     }
 
     isEnd(){
         Console.print(MESSAGE.END)
-
     }
 
     requestRegame(){
         Console.readLine(MESSAGE.REQUEST_REGAME_QUIT, answer => {
-
+            try {
+                this.regameValidate(answer) ;
+                this.regameCallback(answer) ;
+            } catch ( error ) {
+                Console.print(error) ;
+                this.requestRegame() ;
+            }
         })
     }
 
     regameCallback(answer){
-
+        if ( answer === REGAME_QUIT.REGAME ) this.regame() ;
+        else Console.close() ;
     }
 
     regameValidate(answer){
-        answer = +answer ;
-        if ( answer === REGAME_QUIT.QUIT || answer === REGAME_QUIT.REGAME ) throw new Error (MESSAGE.ERROR_BALL_RANGE) ;
+        if ( answer !== REGAME_QUIT.QUIT & answer !== REGAME_QUIT.REGAME ) throw new Error (MESSAGE.ERROR_REGAME_QUIT) ;
     }
 }
 
